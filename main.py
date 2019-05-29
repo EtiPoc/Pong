@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 from agent import *
 env = gym.make('Pong-v0')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device)
 # hyper params
 ACTIONS = env.action_space.n
 BATCH_SIZE = 32
@@ -32,7 +33,7 @@ INITIAL_MEMORY = 10
 MEMORY_SIZE = 10 * INITIAL_MEMORY
 
 agent = Agent(env)
-rewards = agent.train(1)
+rewards = agent.train(5000)
 
 
 

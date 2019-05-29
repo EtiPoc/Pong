@@ -19,6 +19,7 @@ class Agent:
         self.memory = ReplayMemory(MEMORY_SIZE)
         self.memory.fill_memory(env)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(self.device)
         self.dqn = DQN(4, self.action_space).float().to(self.device)
         self.env = env
         self.episode_rewards = []
