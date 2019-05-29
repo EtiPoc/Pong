@@ -1,0 +1,7 @@
+torch
+tqdm
+matplotlib
+torchvision
+gym
+opencv_python
+collections

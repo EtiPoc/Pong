@@ -32,7 +32,7 @@ INITIAL_MEMORY = 10
 MEMORY_SIZE = 10 * INITIAL_MEMORY
 
 agent = Agent(env)
-rewards = agent.train(100)
+rewards = agent.train(1)
 
 
 

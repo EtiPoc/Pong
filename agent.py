@@ -21,10 +21,12 @@ class Agent:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.dqn = DQN(4, self.action_space).float().to(self.device)
         self.env = env
+        self.episode_rewards = []
         self.exploration_rate = exploration_rate
         self.exploration_decay = exploration_decay
         self.explore = explore
         self.model_optim = optim.Adam(self.dqn.parameters(), lr=1e-4)
+        self.episodes = 0
 
     def get_action(self, obs):
         if self.exploration_rate>random.random() and self.explore:
@@ -76,6 +78,10 @@ class Agent:
             episode_rewards.append(episode_reward)
             if self.exploration_rate > 0.1:
                 self.exploration_rate *= self.exploration_decay
+        self.episodes += num_episodes
+        self.save(str(self.episodes)+'_model')
+        self.episode_rewards += episode_rewards
+        np.save(str(self.episodes)+'_rewards', self.episode_rewards)
         return episode_rewards
 
     def process_batch(self, batch):
@@ -103,5 +109,11 @@ class Agent:
             y[i, batch[i][1]] = Qs[i]
 
         return observations, y
+
+    def load_dqn(self, path):
+        self.dqn = torch.load(path)
+
+    def save(self, path):
+        torch.save(self.dqn, path)
 
 

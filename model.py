@@ -31,3 +31,9 @@ class DQN(nn.Module):
         x = F.relu(self.linear_1(x.view(x.size(0), -1)))
         x = self.linear_2(x)
         return x
+
+    def save(self, path):
+        torch.save(path)
+
+    def load(self, path):
+        torch.load(path)
